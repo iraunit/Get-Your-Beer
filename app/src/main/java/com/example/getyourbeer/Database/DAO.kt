@@ -9,8 +9,14 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertBeer(beerEntity: BeerEntity)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrder(ordersEntity: OrdersEntity)
+
     @Query("SELECT * FROM beer_details ORDER BY name ASC")
     fun getAllBeers(): LiveData<List<BeerEntity>>
+
+    @Query("SELECT * FROM past_order ORDER BY systemTime DESC")
+    fun getAllOrders(): LiveData<List<OrdersEntity>>
 
     @Query("SELECT * FROM beer_details WHERE favorite=1")
     fun getFavBeers(): LiveData<List<BeerEntity>>

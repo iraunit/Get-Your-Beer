@@ -6,7 +6,8 @@ import androidx.room.Database
 
 @Database(
     entities = [
-        BeerEntity::class
+        BeerEntity::class,
+        OrdersEntity::class
     ],
     version = 1
 )

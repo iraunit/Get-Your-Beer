@@ -25,11 +25,14 @@ data class BeerEntity(
 
 @Entity(tableName = "past_order")
 data class OrdersEntity(
-    @PrimaryKey(autoGenerate = true)
-    var id:Int,
     var orderDateTime:String,
+    var systemTime:Long,
     var totalCost:Int,
-    var orderDetails:ArrayList<String>
+    var items:ArrayList<String>,
+    var price:ArrayList<String>,
+    var quantityNo:ArrayList<String>,
+    @PrimaryKey(autoGenerate = true)
+    var id:Int = 0
 )
 
 class TypeConverterClass {
