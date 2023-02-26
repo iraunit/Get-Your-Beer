@@ -23,6 +23,15 @@ data class BeerEntity(
     var quantity: Int? = 0
 )
 
+@Entity(tableName = "past_order")
+data class OrdersEntity(
+    @PrimaryKey(autoGenerate = true)
+    var id:Int,
+    var orderDateTime:String,
+    var totalCost:Int,
+    var orderDetails:ArrayList<String>
+)
+
 class TypeConverterClass {
     @TypeConverter
     fun fromList(list: ArrayList<String>?): String {

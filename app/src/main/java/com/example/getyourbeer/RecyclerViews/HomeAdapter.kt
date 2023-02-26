@@ -60,9 +60,15 @@ class HomeAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEntity,
             listener.favClicked(current,position)
         }
 
+        holder.addToCart.setOnClickListener {
+            if(current.quantity==0){
+                holder.plus.performClick()
+            }
+        }
+
         holder.plus.setOnClickListener { current.quantity = current.quantity?.plus(+1); holder.addToCart.text=current.quantity.toString(); listener.addToCart(current,position);}
 
-        holder.minus.setOnClickListener { current.quantity = current.quantity?.minus(+1); holder.addToCart.text=current.quantity.toString(); if (current.quantity==0){holder.addToCart.text="Add to Cart"} ; listener.addToCart(current,position);}
+        holder.minus.setOnClickListener { current.quantity = current.quantity?.minus(+1);  if (current.quantity!! ==0){holder.addToCart.text="Add to Cart"} else if(current.quantity!! >=0) holder.addToCart.text=current.quantity.toString(); listener.addToCart(current,position);}
     }
 
     override fun getItemCount(): Int {

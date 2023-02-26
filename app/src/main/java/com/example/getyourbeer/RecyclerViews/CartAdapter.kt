@@ -61,9 +61,15 @@ class CartAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEntity,
             listener.favClicked(current,position)
         }
 
+        holder.addToCart.setOnClickListener {
+            if(current.quantity==0){
+                holder.plus.performClick()
+            }
+        }
+
         holder.plus.setOnClickListener { current.quantity = current.quantity?.plus(+1); holder.addToCart.text=current.quantity.toString(); listener.addToCart(current,position);}
 
-        holder.minus.setOnClickListener { current.quantity = current.quantity?.minus(+1); if (current.quantity==0){listener.addToCart(current,position); holder.addToCart.text="Add to Cart" } else listener.addToCart(current,position);}
+        holder.minus.setOnClickListener { current.quantity = current.quantity?.minus(+1);  if (current.quantity!! ==0){holder.addToCart.text="Add to Cart"} else if(current.quantity!! >=0) holder.addToCart.text=current.quantity.toString(); listener.addToCart(current,position);}
 
         holder.addToFav.visibility=View.GONE
         holder.attenuationLevel.visibility=View.GONE
