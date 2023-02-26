@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class FavoriteAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEnt
         val addToFav = itemView.findViewById<ImageView>(R.id.addTofav)
         val addToCart = itemView.findViewById<Button>(R.id.addToCart)
         val buttonLayout=itemView.findViewById<LinearLayout>(R.id.buttonLayout)
+        val card = itemView.findViewById<CardView>(R.id.cardView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,7 +56,7 @@ class FavoriteAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEnt
 
         if(current.inCart) holder.addToCart.text="Remove from Cart"
         else holder.addToCart.text= "Add To Cart"
-
+        holder.card.setOnClickListener { listener.onbeerClicked(current) }
         holder.addToFav.setOnClickListener {
             if(!current.favorite) holder.addToFav.setImageResource(R.drawable.heart_filled)
             else holder.addToFav.setImageResource(R.drawable.heart_outlined)

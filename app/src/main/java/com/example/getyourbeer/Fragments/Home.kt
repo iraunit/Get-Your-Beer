@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.getyourbeer.Popup
 import com.example.getyourbeer.R
 import com.example.getyourbeer.RecyclerViews.HomeAdapter
 import com.shyptsolution.getyourbeer.Database.BeerEntity
+import com.shyptsolution.getyourbeer.Database.OrdersEntity
 import com.shyptsolution.getyourbeer.Database.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,5 +56,13 @@ class Home : Fragment(), HomeAdapter.onItemClick {
         lifecycleScope.launch(Dispatchers.IO){
             dataBaseViewModel.updateCart(maxOf(0,beer.quantity!!),beer.id!!)
         }
+    }
+
+    override fun onbeerClicked(beerEntity: BeerEntity) {
+        Popup().showPopup(requireContext(),R.layout.popup_layout,requireView(),R.id.homeRecyclerView)
+    }
+
+    override fun onOrderClicked(ordersEntity: OrdersEntity) {
+
     }
 }

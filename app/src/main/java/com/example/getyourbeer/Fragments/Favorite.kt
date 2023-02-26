@@ -10,11 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.getyourbeer.Popup
 import com.example.getyourbeer.R
 import com.example.getyourbeer.RecyclerViews.CartAdapter
 import com.example.getyourbeer.RecyclerViews.FavoriteAdapter
 import com.example.getyourbeer.RecyclerViews.HomeAdapter
 import com.shyptsolution.getyourbeer.Database.BeerEntity
+import com.shyptsolution.getyourbeer.Database.OrdersEntity
 import com.shyptsolution.getyourbeer.Database.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,7 +40,6 @@ class Favorite : Fragment(), HomeAdapter.onItemClick {
         })
         recyclerView.adapter = adapter
         recyclerView.itemAnimator = null
-
         return MyView
     }
 
@@ -58,6 +59,14 @@ class Favorite : Fragment(), HomeAdapter.onItemClick {
             var b=beer
             b.inCart=!beer.inCart
         }
+    }
+
+    override fun onbeerClicked(beerEntity: BeerEntity) {
+        Popup().showPopup(requireContext(),R.layout.popup_layout,requireView(),R.id.homeRecyclerView)
+    }
+
+    override fun onOrderClicked(ordersEntity: OrdersEntity) {
+
     }
 
 }

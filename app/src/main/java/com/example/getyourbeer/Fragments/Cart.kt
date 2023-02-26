@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.getyourbeer.Popup
 import com.example.getyourbeer.R
 import com.example.getyourbeer.RecyclerViews.CartAdapter
 import com.example.getyourbeer.RecyclerViews.HomeAdapter
@@ -65,7 +66,7 @@ class Cart : Fragment(), HomeAdapter.onItemClick {
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
             val formatted = current.format(formatter)
-            val order=OrdersEntity(formatted,totalPrice,items,cost,quantity)
+            val order=OrdersEntity(0,formatted,System.currentTimeMillis(),totalPrice,items,cost,quantity)
             lifecycleScope.launch(Dispatchers.IO){
                 dataBaseViewModel.insertOrder(order)
                 for(it in adapter.currentList){
@@ -93,6 +94,14 @@ class Cart : Fragment(), HomeAdapter.onItemClick {
         lifecycleScope.launch(Dispatchers.IO){
             dataBaseViewModel.updateCart(maxOf(0,beer.quantity!!),beer.id!!)
         }
+    }
+
+    override fun onbeerClicked(beerEntity: BeerEntity) {
+        Popup().showPopup(requireContext(),R.layout.popup_layout,requireView(),R.id.cartRecyclerView)
+    }
+
+    override fun onOrderClicked(ordersEntity: OrdersEntity) {
+
     }
 
 }

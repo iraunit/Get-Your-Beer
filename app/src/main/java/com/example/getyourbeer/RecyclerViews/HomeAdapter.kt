@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.getyourbeer.R
 import com.shyptsolution.getyourbeer.Database.BeerEntity
+import com.shyptsolution.getyourbeer.Database.OrdersEntity
 import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 
@@ -30,6 +32,7 @@ class HomeAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEntity,
         val addToCart = itemView.findViewById<Button>(R.id.addToCart)
         val plus = itemView.findViewById<ImageView>(R.id.plus)
         val minus = itemView.findViewById<ImageView>(R.id.minus)
+        val card = itemView.findViewById<CardView>(R.id.cardView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +53,7 @@ class HomeAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEntity,
         Picasso.get().load(current.imageUrl).into(holder.beerPic)
         if(current.favorite) holder.addToFav.setImageResource(R.drawable.heart_filled)
         else holder.addToFav.setImageResource(R.drawable.heart_outlined)
-
+        holder.card.setOnClickListener { listener.onbeerClicked(current) }
         if(current.quantity!! >0) holder.addToCart.text=current.quantity.toString()
         else holder.addToCart.text= "Add To Cart"
 
@@ -78,6 +81,10 @@ class HomeAdapter(val listener:HomeAdapter.onItemClick): ListAdapter<BeerEntity,
     interface onItemClick{
         fun favClicked(beerEntity: BeerEntity,position: Int)
         fun addToCart(beerEntity: BeerEntity,position: Int)
+
+        fun onbeerClicked(beerEntity: BeerEntity)
+
+        fun onOrderClicked(ordersEntity: OrdersEntity)
     }
 }
 
